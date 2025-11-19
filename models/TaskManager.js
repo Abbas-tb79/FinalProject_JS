@@ -1,5 +1,5 @@
 import Task from "./Task.js";
-import {localStorage, StorageService} from "../LocalStorage";
+import { StorageService } from "../LocalStorage.js";
 
 
 export default class TaskManager {
@@ -38,7 +38,4 @@ export default class TaskManager {
     showAllTasks() {
         return [...this.#tasks];
     }
-
-
-
 }

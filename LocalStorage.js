@@ -1,5 +1,5 @@
-import Task from 'models/Task.js';
-import TaskManager from 'models/TaskManager.js';
+import Task from './models/Task.js';
+import TaskManager from './models/TaskManager.js';
 
 export class StorageService {
     #saveValid = null;
@@ -11,13 +11,13 @@ export class StorageService {
     }
 
     static save(taskManager) {
-        const key = "tasks"; // ключ локально
+        const key = "tasks";
         const json = taskManager.tasks.map(task => task.toJSON());
         localStorage.setItem(key, JSON.stringify(json));
     }
 
     static load() {
-        const key = "tasks"; // ключ локально
+        const key = "tasks";
         const data = localStorage.getItem(key);
         if (!data) return new TaskManager();
 
