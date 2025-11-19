@@ -43,7 +43,18 @@ export default class Task {
         if(newTask.description !== this.#description){this.#description = newTask.description;}
     }
 
+    toJson(){
+        return {
+            id: this.#id,
+            title: this.#title,
+            description: this.#description,
+            completed : this.completed,
+            dateCreated : this.dateCreated,
+        }
+    }
 
-
+    static fromJSON(obj) {
+        return new Task(obj.title, obj.description, obj.id, obj.completed, obj.dateCreated);
+    }
 
 }

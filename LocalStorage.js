@@ -1,4 +1,7 @@
-export class localStorage{
+import Task from 'models/Task.js';
+import TaskManager from 'models/TaskManager.js';
+
+export class StorageService {
     #saveValid = null;
     #loadValid  = null;
 
@@ -7,11 +10,19 @@ export class localStorage{
         this.#loadValid = loadValid ;
     }
 
-    save(){
-
+    static save(taskManager) {
+        const key = "tasks"; // ключ локально
+        const json = taskManager.tasks.map(task => task.toJSON());
+        localStorage.setItem(key, JSON.stringify(json));
     }
 
-    load(){
+    static load() {
+        const key = "tasks"; // ключ локально
+        const data = localStorage.getItem(key);
+        if (!data) return new TaskManager();
 
+        const parsed = JSON.parse(data);
+        const tasks = parsed.map(obj => Task.fromJSON(obj));
+        return new TaskManager(tasks);
     }
 }

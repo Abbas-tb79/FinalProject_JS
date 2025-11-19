@@ -1,4 +1,5 @@
 import Task from "./Task.js";
+import {localStorage, StorageService} from "../LocalStorage";
 
 
 export default class TaskManager {
@@ -14,10 +15,12 @@ export default class TaskManager {
 
     addTask(task) {
         this.#tasks.push(task);
+        StorageService.save(this);
     }
 
     removeTask(id) {
         this.#tasks = this.#tasks.filter(task => task.id !== id);
+        StorageService.save(this);
     }
 
     searchById(id) {
@@ -28,14 +31,13 @@ export default class TaskManager {
         const task = this.searchById(id);
         if (task) {
             task.update(data);
+            StorageService.save(this);
         }
     }
 
     showAllTasks() {
         return [...this.#tasks];
     }
-
-    
 
 
 
