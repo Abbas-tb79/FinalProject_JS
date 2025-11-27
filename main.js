@@ -1,6 +1,6 @@
 import Task from "./models/Task.js";
 import TaskManager from "./models/TaskManager.js";
-import { StorageService } from "./LocalStorage.js";
+import  {StorageService}  from "LocalStorage.js";
 
 
 const manager = new TaskManager();
