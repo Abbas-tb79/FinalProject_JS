@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="df88f9f0-ed1e-45e4-b238-820181e8518f" name="proj1" url="C:\Users\Asus\OneDrive - ITM STEP MMC\Рабочий стол\JavaScript\FinalProject_JS">
+        <fileTransfer accessType="LOCAL" port="0" />
+      </webServer>
+      <webServer id="8852dcf5-6365-4445-80a0-44db4db1b9ae" name="proj2" url="C:\Users\Asus\OneDrive - ITM STEP MMC\Рабочий стол\JavaScript\TestProject">
+        <fileTransfer accessType="LOCAL" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>
