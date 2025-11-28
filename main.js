@@ -1,5 +1,6 @@
 
 const taskManager = new TaskManager();
+
 // const taskNameRegex;
 // const descriptionRegex;
 
@@ -7,48 +8,68 @@ const taskManager = new TaskManager();
 //     return taskNameRegex.test(taskName.trim());
 // }
 
-const form = document.querySelector('form');
-const taskListAdd = document.getElementById("TaskList");
-const nameInput=document.getElementById("taskName");
-const descriptionInput=document.getElementById("taskDescription");
 
-form.addEventListener('submit', (e) => {
+
+const form = document.querySelector("form");
+const list = document.getElementById("TaskList");
+
+const nameInput = document.getElementById("taskName");
+const descriptionInput = document.getElementById("taskDescription");
+
+const filterSelect = document.getElementById("filterSelect");
+const sortSelect = document.getElementById("SortBy");
+
+
+form.addEventListener('submit', e => {
     e.preventDefault();
 
-    const inputName = nameInput.value.trim();
-    const inputDescription = descriptionInput.value.trim();
+    const name = nameInput.value.trim();
+    const desc = descriptionInput.value.trim();
 
-    const newTask = new Task(inputName, inputDescription);
-    taskManager.addTask(newTask);
-    render(taskManager.filterTasks(filterSelect.value));
+    if (!name || !desc) return;
 
-})
+    const task = new Task(name, desc);
+    taskManager.addTask(task);
 
-function render(tasksArray) {
-    taskListAdd.innerHTML = '';
+    applyFiltersAndSorting();
+    form.reset();
+});
 
-    tasksArray.forEach(task => {
-        const isCompleted = task.getIsCompleted();
 
-        const div = document.createElement('div');
+function render(tasks) {
+    list.innerHTML = "";
+
+    tasks.forEach(task => {
+        const div = document.createElement("div");
         div.innerHTML = `
+            <input type="checkbox" class="toggle" data-id="${task.getId()}" ${task.getIsCompleted() ? "checked" : ""}>
             <strong>${task.getName()}</strong>: ${task.getDescription()}
-            [Status: ${isCompleted ? '✅ Completed' : '⏳ Pending'}]
-            <button data-id="${task.getId()}">Toggle</button>
         `;
-        taskListAdd.appendChild(div);
+        list.appendChild(div);
+    });
+
+    document.querySelectorAll(".toggle").forEach(ch => {
+        ch.addEventListener("change", () => {
+            const id = ch.dataset.id;
+            const task = taskManager.getTasks().find(t => t.getId() === id);
+            task.toggleIsCompleted();
+            taskManager.save();
+            applyFiltersAndSorting();
+        });
     });
 }
 
-    const filterSelect = document.getElementById('filterSelect');
 
-    filterSelect.addEventListener('change', () => {
-        const filteredTasks = taskManager.filterTasks(filterSelect.value);
-        render(filteredTasks);
-    });
+function applyFiltersAndSorting() {
+    let filtered = taskManager.filterTasks(filterSelect.value);
+    let sorted = taskManager.sortTasks(sortSelect.value, filtered);
+    render(sorted);
+}
 
+filterSelect.addEventListener("change", applyFiltersAndSorting);
+sortSelect.addEventListener("change", applyFiltersAndSorting);
 
-
+applyFiltersAndSorting();
 
 
 
