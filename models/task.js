@@ -9,17 +9,19 @@ class Task {
         this.#id = crypto.randomUUID();
         this.#name = name;
         this.#description = description;
-        this.#createdAt = new Date();
         this.#isCompleted = false;
+        this.#createdAt = new Date();
     }
 
     getId() { return this.#id; }
     getName() { return this.#name; }
     getDescription() { return this.#description; }
-    getCreatedAt() { return this.#createdAt; }
     getIsCompleted() { return this.#isCompleted; }
+    getCreatedAt() { return this.#createdAt; }
 
     toggleIsCompleted() { this.#isCompleted = !this.#isCompleted; }
+    setName(name) { this.#name = name; }
+    setDescription(desc) { this.#description = desc; }
 
     toJSON() {
         return {
@@ -32,10 +34,10 @@ class Task {
     }
 
     static fromJSON(obj) {
-        const task = new Task(obj.name, obj.description);
-        task.#id = obj.id;
-        task.#isCompleted = obj.isCompleted;
-        task.#createdAt = new Date(obj.createdAt);
-        return task;
+        const t = new Task(obj.name, obj.description);
+        t.#id = obj.id;
+        t.#isCompleted = obj.isCompleted;
+        t.#createdAt = new Date(obj.createdAt);
+        return t;
     }
 }
